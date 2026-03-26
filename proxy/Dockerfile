@@ -2,7 +2,7 @@ FROM nginxinc/nginx-unprivileged:1-alpine
 LABEL maintainer="i.loboda2024@gmail.com"
 
 COPY ./default.conf.tpl /etc/nginx/default.conf.tpl
-COPY ./gunicorn_headers /etc/nginx/gunicorn_headers
+COPY ./gunicorn_headers /etc/nginx/gunicorn_headerss
 COPY ./run.sh /run.sh
 
 ENV LISTEN_PORT=8000
