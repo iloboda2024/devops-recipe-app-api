@@ -58,6 +58,8 @@ Deploy:
       fi
     - export TF_VAR_ecr_app_image="$ECR_REPO_APP:$CI_COMMIT_SHA"
     - export TF_VAR_ecr_proxy_image="$ECR_REPO_PROXY:$CI_COMMIT_SHA"
+    - export AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID"
+    - export AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY"
     - cd infra/
     - docker compose run --rm terraform -chdir=deploy/ init
     - docker compose run --rm terraform -chdir=deploy/ workspace select -or-create $workspace
@@ -77,6 +79,8 @@ Destroy:
       fi
     - export TF_VAR_ecr_app_image="$ECR_REPO_APP:$CI_COMMIT_SHA"
     - export TF_VAR_ecr_proxy_image="$ECR_REPO_PROXY:$CI_COMMIT_SHA"
+    - export AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID"
+    - export AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY"
     - cd infra/
     - docker compose run --rm terraform -chdir=deploy/ init
     - docker compose run --rm terraform -chdir=deploy/ workspace select -or-create $workspace
