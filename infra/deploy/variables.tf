@@ -1,11 +1,6 @@
-variable "tf_state_bucket" {
-  description = "Name of S3 bucket in AWS for storing TF state"
-  default     = "devops-recipe-app-tf-state-85907"
-}
-
-variable "tf_state_lock_table" {
-  description = "Name of DynamoDB table for TF state locking"
-  default     = "devops-recipe-app-tf-lock-85907"
+variable "prefix" {
+  description = "Prefix for resources in AWS"
+  default     = "raa"
 }
 
 variable "project" {
@@ -14,6 +9,43 @@ variable "project" {
 }
 
 variable "contact" {
-  description = "Contact name"
-  default     = "i.loboda"
+  description = "Contact email for tagging resources"
+  default     = "mark@example.com"
+}
+
+variable "db_username" {
+  description = "Username for the recipe app api database"
+  default     = "recipeapp"
+}
+
+variable "db_password" {
+  description = "Password for the Terraform database"
+}
+
+variable "ecr_proxy_image" {
+  description = "Path to the ECR repo with the proxy image"
+}
+
+variable "ecr_app_image" {
+  description = "Path to the ECR repo with the API image"
+}
+
+variable "django_secret_key" {
+  description = "Secret key for Django"
+}
+
+variable "dns_zone_name" {
+  description = "Domain name"
+  default     = "londonappdev.net"
+}
+
+variable "subdomain" {
+  description = "Subdomain for each environment"
+  type        = map(string)
+
+  default = {
+    prod    = "api"
+    staging = "api.staging"
+    dev     = "api.dev"
+  }
 }
