@@ -2,14 +2,14 @@
 # Network infrastructure #
 ##########################
 
-resource "aws_vpc" "name" {
-  cidr_block = "10.1.0.0/16"
+resource "aws_vpc" "main" {
+  cidr_block           = "10.1.0.0/16"
   enable_dns_hostnames = true
-  enable_dns_support = true
+  enable_dns_support   = true
 }
 
 #########################################################
-# Internet Gateway needed for inbount access to the ALB #
+# Internet Gateway needed for inbound access to the ALB #
 #########################################################
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
@@ -110,8 +110,8 @@ resource "aws_subnet" "private_b" {
 #########################################################################
 
 resource "aws_security_group" "endpoint_access" {
-  description = "Access to ECR"
-  name        = "${local.prefix}-ecr-outbound"
+  description = "Access to endpoints"
+  name        = "${local.prefix}-endpoint-access"
   vpc_id      = aws_vpc.main.id
 
   ingress {
