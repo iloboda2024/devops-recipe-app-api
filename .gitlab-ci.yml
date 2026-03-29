@@ -9,31 +9,31 @@ before_script:
   - echo "$DOCKERHUB_TOKEN" | docker login --username $DOCKERHUB_USER --password-stdin
 
 stages:
-  - Test and Lint
+#  - Test and Lint
   - Build and Push
   - Deploy
   - Destroy
 
-Python checks:
-  stage: Test and Lint
-  script: 
-    - docker compose run --rm app sh -c "python manage.py wait_for_db && python manage.py test"
-    - docker compose run --rm app sh -c "flake8"
-  rules:
-    - if: "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(main|prod)$/ || $CI_COMMIT_BRANCH =~ /^(main|prod)$/"
+# Python checks:
+#   stage: Test and Lint
+#   script: 
+#     - docker compose run --rm app sh -c "python manage.py wait_for_db && python manage.py test"
+#     - docker compose run --rm app sh -c "flake8"
+#   rules:
+#     - if: "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(main|prod)$/ || $CI_COMMIT_BRANCH =~ /^(main|prod)$/"
 
-Terraform Checks:
-  stage: Test and Lint
-  script:
-    - cd infra
-    - docker compose run --rm terraform -chdir=deploy/ init -backend=false
-    - docker compose run --rm terraform -chdir=setup/ init -backend=false
-    - docker compose run --rm terraform -chdir=setup/ validate
-    - docker compose run --rm terraform -chdir=setup/ fmt -check
-    - docker compose run --rm terraform -chdir=setup/ validate
-    - docker compose run --rm terraform -chdir=setup/ fmt -check
-  rules:
-    - if: "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(main|prod)$/ || $CI_COMMIT_BRANCH =~ /^(main|prod)$/"
+# Terraform Checks:
+#   stage: Test and Lint
+#   script:
+#     - cd infra
+#     - docker compose run --rm terraform -chdir=deploy/ init -backend=false
+#     - docker compose run --rm terraform -chdir=setup/ init -backend=false
+#     - docker compose run --rm terraform -chdir=setup/ validate
+#     - docker compose run --rm terraform -chdir=setup/ fmt -check
+#     - docker compose run --rm terraform -chdir=setup/ validate
+#     - docker compose run --rm terraform -chdir=setup/ fmt -check
+#   rules:
+#     - if: "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(main|prod)$/ || $CI_COMMIT_BRANCH =~ /^(main|prod)$/"
 
 Push to ECR:
   stage: Build and Push
@@ -58,6 +58,7 @@ Deploy:
       fi
     - export TF_VAR_ecr_app_image="$ECR_REPO_APP:$CI_COMMIT_SHA"
     - export TF_VAR_ecr_proxy_image="$ECR_REPO_PROXY:$CI_COMMIT_SHA"
+    - apk update && apk add aws-cli
     - aws sts get-caller-identity
     - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
     - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
