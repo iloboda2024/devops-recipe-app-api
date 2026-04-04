@@ -53,6 +53,23 @@ resource "aws_ecs_task_definition" "api" {
   task_role_arn            = aws_iam_role.app_task.arn
 
   container_definitions = jsonencode([
+    # {
+    #   name = "api"
+    #   image = var.ecr_app_image
+    #   essential = true
+    #   memoryReservation = 256
+    #   user = "django-user"
+    #   environment = [
+    #     {
+    #       name = "DJANGO_SECRET_KEY"
+    #       value = var.django_secret_key
+    #     },
+    #     {
+    #       name = "DB_HOST"
+    #       value =
+    #     }
+    #   ]
+    # },
     {
       name              = "proxy"
       image             = var.ecr_proxy_image
