@@ -172,7 +172,6 @@ data "aws_iam_policy_document" "rds" {
 }
 
 resource "aws_iam_service_linked_role" "rds-slr" {
-  name = "${aws_iam_user.cd.name}-rds-slr"
   aws_service_name = "rds.amazonaws.com"
 }
 
