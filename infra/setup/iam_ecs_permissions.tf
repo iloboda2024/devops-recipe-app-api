@@ -101,3 +101,7 @@ resource "aws_iam_user_policy_attachment" "logs" {
   user       = aws_iam_user.cd.name
   policy_arn = aws_iam_policy.logs.arn
 }
+
+resource "aws_iam_service_linked_role" "ecs-slr" {
+  aws_service_name = "ecs.amazonaws.com"
+}
