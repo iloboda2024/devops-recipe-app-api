@@ -17,6 +17,7 @@ data "aws_iam_policy_document" "ecs" {
       "ecs:RegisterTaskDefinition",
       "ecs:CreateCluster",
       "ecs:UpdateCluster",
+      "ecs:TagResource",
     ]
     resources = ["*"]
   }
@@ -56,7 +57,7 @@ data "aws_iam_policy_document" "iam" {
       "iam:AttachRolePolicy",
       "iam:TagRole",
       "iam:TagPolicy",
-      "iam:PassRole"
+      "iam:PassRole",
     ]
     resources = ["*"]
   }
