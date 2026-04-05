@@ -23,6 +23,13 @@ resource "aws_security_group" "rds" {
     protocol  = "tcp"
     from_port = 5432
     to_port   = 5432
+
+    # extra layer of security which ensure that only resources that have this group 
+    # can access our database via inbound access
+    # locked down as much as possible
+    security_groups = [
+      aws_security_group.ecs_service.id
+    ]
   }
 
   tags = {

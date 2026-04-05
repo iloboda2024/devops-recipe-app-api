@@ -14,12 +14,12 @@ variable "contact" {
 }
 
 variable "db_username" {
-   description = "Username for the recipe app api database"
-   default     = "recipeapp"
+  description = "Username for the recipe app api database"
+  default     = "recipeapp"
 }
 
 variable "db_password" {
-   description = "Password for the Terraform database"
+  description = "Password for the Terraform database"
 }
 
 variable "ecr_proxy_image" {
