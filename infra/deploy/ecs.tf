@@ -153,7 +153,6 @@ resource "aws_security_group" "ecs_service" {
   name        = "${local.prefix}-ecs-service"
   vpc_id      = aws_vpc.main.id
   # outbound access to endpoints
-  # Outbound access to endpoints
   egress {
     from_port   = 443
     to_port     = 443
